@@ -50,6 +50,18 @@
                     <li><a href="{{ aurl('/cats') }}"><i class="fa fa-list"></i>Show All Categories</a></li>
                 </ul>
             </li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-tags"></i> <span>Tags</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="{{ aurl('/tags/create') }}"><i class="fa fa-plus"></i>Create Tags</a></li>
+                    <li><a href="{{ aurl('/tags') }}"><i class="fa fa-list"></i>Show All Tags</a></li>
+                </ul>
+            </li>
         </ul>
     </section>
     <!-- /.sidebar -->
