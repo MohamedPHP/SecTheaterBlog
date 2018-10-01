@@ -24,7 +24,7 @@
     <!-- /.search form -->
     <!-- sidebar menu: : style can be found in sidebar.less -->
     <ul class="sidebar-menu" data-widget="tree">
-      <li><a href="#"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+      <li><a href="{{ aurl('/') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
 
       <li class="treeview">
         <a href="#">
@@ -34,8 +34,8 @@
           </span>
         </a>
         <ul class="treeview-menu">
-          <li><a href="#"><i class="fa fa-plus"></i>Create Users</a></li>
-          <li><a href="#"><i class="fa fa-list"></i>Show All Users</a></li>
+          <li><a href="{{ aurl('/users/create') }}"><i class="fa fa-plus"></i>Create Users</a></li>
+          <li><a href="{{ aurl('/users') }}"><i class="fa fa-list"></i>Show All Users</a></li>
         </ul>
       </li>
     </ul>
