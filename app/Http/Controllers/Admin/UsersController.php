@@ -119,10 +119,7 @@ class UsersController extends Controller
         $user->type = $request->type;
 
         if ($request->hasFile('image')) {
-            if (file_exists(public_path('uploads/' . $user->image))) {
-                @unlink(public_path('uploads/' . $user->image));
-            }
-            $user->image = UploadImages('users', $request->file('image'));
+            $user->image = UpdateImages($user->image, 'users', $request->file('image'));
         }
 
         $user->save();

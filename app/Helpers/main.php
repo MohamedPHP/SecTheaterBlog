@@ -38,3 +38,12 @@ function UploadImages($dir, $image)
 
     return $saveImage;
 }
+
+function UpdateImages($oldFile, $dir, $image) {
+
+    if ( !empty($oldFile) && !is_null($oldFile) && file_exists( public_path('uploads/'.$oldFile) ) ) {
+        unlink(public_path('uploads/'.$oldFile));
+    }
+
+    return UploadImages($dir, $image);
+}

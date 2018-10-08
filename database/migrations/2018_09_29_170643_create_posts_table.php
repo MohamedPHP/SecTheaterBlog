@@ -20,8 +20,8 @@ class CreatePostsTable extends Migration
             $table->string('image');
             $table->string('keywords');
             $table->string('description');
-            $table->string('category_id');
-            $table->string('user_id');
+            $table->integer('category_id');
+            $table->integer('user_id');
             $table->timestamps();
         });
     }

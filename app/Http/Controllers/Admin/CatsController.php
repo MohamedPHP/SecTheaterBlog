@@ -60,7 +60,6 @@ class CatsController extends Controller
 
         $cat = Category::create($data);
 
-        session()->flash('success', "Created Successfully");
         return redirect()->route('cats.index');
     }
 
@@ -115,10 +114,7 @@ class CatsController extends Controller
 
 
         if ($request->hasFile('image')) {
-            if (file_exists(public_path('uploads/' . $category->image))) {
-                @unlink(public_path('uploads/' . $category->image));
-            }
-            $data['image'] = UploadImages('cats', $request->file('image'));
+            $data['image'] = UpdateImages($category->image, 'cats', $request->file('image'));
         }
 
         $data = array_merge($request->except('_token', '_method'), $data);

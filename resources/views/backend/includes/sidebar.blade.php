@@ -62,6 +62,19 @@
                     <li><a href="{{ aurl('/tags') }}"><i class="fa fa-list"></i>Show All Tags</a></li>
                 </ul>
             </li>
+
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-book"></i> <span>Posts</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="{{ aurl('/posts/create') }}"><i class="fa fa-plus"></i>Create Posts</a></li>
+                    <li><a href="{{ aurl('/posts') }}"><i class="fa fa-list"></i>Show All Posts</a></li>
+                </ul>
+            </li>
         </ul>
     </section>
     <!-- /.sidebar -->
