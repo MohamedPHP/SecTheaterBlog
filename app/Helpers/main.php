@@ -47,3 +47,8 @@ function UpdateImages($oldFile, $dir, $image) {
 
     return UploadImages($dir, $image);
 }
+
+function checkValue($value)
+{
+    return !empty($value) && !is_null($value);
+}

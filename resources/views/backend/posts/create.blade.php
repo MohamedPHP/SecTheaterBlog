@@ -61,18 +61,6 @@
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('content') ? ' has-error' : '' }}">
-                            <label class="col-md-2 control-label">Content <span style="color:red">*</span> </label>
-                            <div class="col-md-6">
-                                <textarea name="content" class="form-control" placeholder="content" rows="8" cols="80">{{ old('content') }}</textarea>
-                                @if ($errors->has('content'))
-                                    <span class="help-block">
-                                        <strong class="help-block">{{ $errors->first('content') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
                         <div class="form-group{{ $errors->has('image') ? ' has-error' : '' }}">
                             <label class="control-label col-md-2">Image <span style="color:red">*</span></label>
                             <div class="col-md-6">
@@ -109,6 +97,19 @@
                             </div>
                         </div>
 
+
+                        <div class="form-group{{ $errors->has('content') ? ' has-error' : '' }}">
+                            <label class="col-md-2 control-label">Content <span style="color:red">*</span> </label>
+                            <div class="col-md-10">
+                                <textarea name="content" class="form-control" placeholder="content" rows="8" cols="80">{{ old('content') }}</textarea>
+                                @if ($errors->has('content'))
+                                    <span class="help-block">
+                                        <strong class="help-block">{{ $errors->first('content') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
                     </div>
                     <div class="form-actions">
                         <div class="row">
@@ -124,4 +125,13 @@
         </div>
         <!-- /.box -->
     </section>
+@endsection
+
+@section('scripts')
+    <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
+    <script type="text/javascript">
+        CKEDITOR.replace('content', {
+            language: 'en',
+        });
+    </script>
 @endsection

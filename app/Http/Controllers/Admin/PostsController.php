@@ -35,9 +35,28 @@ class PostsController extends Controller
      */
     public function index()
     {
+        $posts = Post::with('category', 'tags', 'user');
+        if (request()->has('search') && checkValue(request()->search)) {
+            $posts->where('title', 'LIKE', '%'.request()->search.'%')->orWhere('keywords', 'LIKE', '%'.request()->search.'%');
+        }
+        if (request()->has('cat') && checkValue(request()->cat)) {
+            $posts->where('category_id', request()->cat);
+        }
+        if (request()->has('tag') && checkValue(request()->tag)) {
+            $posts->whereHas('tags', function ($query) {
+                return $query->where('tags.id', request()->tag);
+            });
+        }
+
+        $allPosts = $posts->paginate(5);
+        $postsCount = $posts->count();
+
         return view('backend.posts.index', [
             'title' => "Show All Posts",
-            'index' => Post::with('category', 'tags', 'user')->get(),
+            'index' => $allPosts,
+            'cats' => Category::all(),
+            'tags' => Tag::all(),
+            'posts_count' => $postsCount,
         ]);
     }
 

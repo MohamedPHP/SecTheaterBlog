@@ -9,6 +9,36 @@
                 <h3 class="box-title">{{$title}}</h3>
             </div>
             <div class="box-body">
+                <form method="get" action="{{ aurl('/posts') }}">
+                    <div class="row">
+                      <div class="col-md-4">
+                        <input type="text" class="form-control" name="search" value="{{ request()->search }}" placeholder="Search In Posts By Name Or Keywords ..">
+                      </div>
+                      <div class="col-md-3">
+                        <select class="form-control" name="cat">
+                            <option value="">Search By Category</option>
+                            @foreach ($cats as $c)
+                                <option value="{{ $c->id }}" {{ request()->cat == $c->id ? 'selected' : '' }}>{{ $c->title }}</option>
+                            @endforeach
+                        </select>
+                      </div>
+                      <div class="col-md-3">
+                        <select class="form-control" name="tag">
+                            <option value="">Search By Tag Name</option>
+                            @foreach ($tags as $c)
+                                <option value="{{ $c->id }}" {{ request()->tag == $c->id ? 'selected' : '' }}>{{ $c->name }}</option>
+                            @endforeach
+                        </select>
+                      </div>
+                      <div class="col-md-2">
+                          <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                          <a href="{{ aurl('/posts') }}" class="btn btn-warning">Reset</a>
+                      </div>
+                    </div>
+                </form>
+                <hr>
+                You Have {{ $posts_count }} Post{{ $posts_count > 1 ? "'s" : ''}}
+                <hr>
                 <table class="table">
                   <thead>
                     <tr>
@@ -49,6 +79,10 @@
                       @endforeach
                   </tbody>
                 </table>
+                <hr>
+                <div class="text-center">
+                    {{ $index->appends(request()->except('page'))->render() }}
+                </div>
             </div>
             <!-- /.box-body -->
         </div>

@@ -55,7 +55,7 @@
                     </div>
                     <div class="col-md-12">
                         <strong>Content : </strong>
-                        {{ $show->content }}
+                        <textarea name="content" rows="8" cols="80" disabled>{{ $show->content }}</textarea>
                         <br><hr>
                     </div>
                     <div class="col-md-12">
@@ -89,4 +89,12 @@
         </div>
         <!-- /.box -->
     </section>
+@endsection
+@section('scripts')
+    <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
+    <script type="text/javascript">
+        CKEDITOR.replace('content', {
+            language: 'en',
+        });
+    </script>
 @endsection
