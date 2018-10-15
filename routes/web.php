@@ -12,10 +12,7 @@
 */
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'FrontendManagerController@index');
+Route::get('/post/{id}/{title?}', 'FrontendManagerController@single');
 
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');

@@ -15,6 +15,7 @@
 Route::group(['middleware' => ['admin']], function () {
 
     Route::get('/', 'AdminController@index');
+    Route::get('/logout', 'AdminController@logout');
 
     Route::resource('/users', 'UsersController');
 

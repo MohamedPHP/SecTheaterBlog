@@ -13,4 +13,10 @@ class AdminController extends Controller
             'title' => 'Dashboard'
         ]);
     }
+
+    public function logout()
+    {
+        auth()->logout();
+        return redirect('/');
+    }
 }
