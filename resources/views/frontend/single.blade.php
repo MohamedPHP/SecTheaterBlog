@@ -35,6 +35,14 @@
                     <div class="row justify-content-center">
                         <div class="col-md-10 col-lg-8">
                             <div class="article__body">
+                                @if (session()->has('message'))
+                                    <div class="alert bg--success">
+                                        <div class="alert__body">
+                                            {{ session()->get('message') }}
+                                        </div>
+                                    </div>
+                                    <br>
+                                @endif
                                 {!! $post->content !!}
                             </div>
                             {{-- <div class="article__share text-center">
@@ -60,11 +68,24 @@
         </article>
     </section>
 
-    <section class="space--sm">
+    <section>
         <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <hr>
+            <div class="row justify-content-center">
+                <div class="col-md-10 col-lg-8">
+                    <h4>
+
+                        @if (auth()->check())
+                            @if (!auth()->user()->likes()->where('post_id', $post->id)->count())
+                                Did You Enjoy The Post So
+                                <a href="{{ route('likes.add', ['post_id' => $post->id]) }}">Like It</a>
+                            @else
+                                Did'nt You You Enjoy The Post So
+                                <a href="{{ route('likes.remove', ['post_id' => $post->id]) }}">UnLike It</a>
+                            @endif
+                        @endif
+
+                        <span>It Has {{ $post->likes_count }} Like</span>
+                    </h4>
                 </div>
             </div>
             <!--end of row-->
@@ -77,104 +98,45 @@
             <div class="row justify-content-center">
                 <div class="col-md-10 col-lg-8">
                     <div class="comments">
-                        <h3>4 Comments</h3>
+                        <h3>{{ $post->comments->count() }} Comments</h3>
                         <ul class="comments__list">
-                            <li>
-                                <div class="comment">
-                                    <div class="comment__avatar">
-                                        <img alt="Image" src="{{ asset('frontend/img/avatar-round-1.png') }}" />
-                                    </div>
-                                    <div class="comment__body">
-                                        <h5 class="type--fine-print">Anne Brady</h5>
-                                        <div class="comment__meta">
-                                            <span>10th May 2016</span>
-                                            <a href="#">Reply</a>
+                            @foreach ($post->comments as $comment)
+                                <li>
+                                    <div class="comment">
+                                        <div class="comment__avatar">
+                                            <img alt="Image" src="{{ asset('uploads/'.$comment->user->image) }}" />
                                         </div>
-                                        <p>
-                                            Affordances food-truck SpaceTeam unicorn disrupt integrate viral pair programming big data pitch deck intuitive intuitive prototype long shadow. Responsive hacker intuitive driven
-                                        </p>
-                                    </div>
-                                </div>
-                                <!--end comment-->
-                                <div class="comment">
-                                    <div class="comment__avatar">
-                                        <img alt="Image" src="{{ asset('frontend/img/avatar-round-3.png') }}" />
-                                    </div>
-                                    <div class="comment__body">
-                                        <h5 class="type--fine-print">Jacob Sims</h5>
-                                        <div class="comment__meta">
-                                            <span>10th May 2016</span>
-                                            <a href="#">Reply</a>
+                                        <div class="comment__body">
+                                            <h5 class="type--fine-print">{{ $comment->user->name }}</h5>
+                                            <div class="comment__meta">
+                                                <span>{{ $comment->created_at->format('d M Y, h:i') }}</span>
+                                            </div>
+                                            <p>
+                                                {{ $comment->comment }}
+                                            </p>
                                         </div>
-                                        <p>
-                                            Prototype intuitive intuitive thought leader personas parallax paradigm long shadow engaging unicorn SpaceTeam fund ideate paradigm.
-                                        </p>
                                     </div>
-                                </div>
-                                <!--end comment-->
-                            </li>
-                            <li>
-                                <div class="comment">
-                                    <div class="comment__avatar">
-                                        <img alt="Image" src="{{ asset('frontend/img/avatar-round-2.png') }}" />
-                                    </div>
-                                    <div class="comment__body">
-                                        <h5 class="type--fine-print">Kelly Dewitt</h5>
-                                        <div class="comment__meta">
-                                            <span>11th May 2016</span>
-                                            <a href="#">Reply</a>
-                                        </div>
-                                        <p>
-                                            Responsive hacker intuitive driven waterfall is so 2000 and late intuitive cortado bootstrapping venture capital. Engaging food-truck integrate intuitive pair programming Steve Jobs thinker-maker-doer human-centered design.
-                                        </p>
-                                        <p>
-                                            Affordances food-truck SpaceTeam unicorn disrupt integrate viral pair programming big data pitch deck intuitive intuitive prototype long shadow. Responsive hacker intuitive driven
-                                        </p>
-                                    </div>
-                                </div>
-                                <!--end comment-->
-                            </li>
-                            <li>
-                                <div class="comment">
-                                    <div class="comment__avatar">
-                                        <img alt="Image" src="{{ asset('frontend/img/avatar-round-4.png') }}" />
-                                    </div>
-                                    <div class="comment__body">
-                                        <h5 class="type--fine-print">Luke Smith</h5>
-                                        <div class="comment__meta">
-                                            <span>11th May 2016</span>
-                                            <a href="#">Reply</a>
-                                        </div>
-                                        <p>
-                                            Unicorn disrupt integrate viral pair programming big data pitch deck intuitive intuitive prototype long shadow. Responsive hacker intuitive driven
-                                        </p>
-                                    </div>
-                                </div>
-                                <!--end comment-->
-                            </li>
+                                    <!--end comment-->
+                                </li>
+                            @endforeach
                         </ul>
                     </div>
                     <!--end comments-->
-                    <div class="comments-form">
-                        <h4>Leave a comment</h4>
-                        <form class="row">
-                            <div class="col-md-6">
-                                <label>Your Name:</label>
-                                <input type="text" name="Name" placeholder="Type name here" />
-                            </div>
-                            <div class="col-md-6">
-                                <label>Email Address:</label>
-                                <input type="email" name="email" placeholder="you@mailprovider.com" />
-                            </div>
-                            <div class="col-md-12">
-                                <label>Comment:</label>
-                                <textarea rows="4" name="Message" placeholder="Message"></textarea>
-                            </div>
-                            <div class="col-md-3">
-                                <button class="btn btn--primary" type="submit">Submit Comment</button>
-                            </div>
-                        </form>
-                    </div>
+                    @if (auth()->check())
+                        <div class="comments-form">
+                            <h4>Leave a comment</h4>
+                            <form class="row" method="post" action="{{ route('comments.add', ['post_id' => $post->id]) }}">
+                                {{ csrf_field() }}
+                                <div class="col-md-12">
+                                    <label>Comment:</label>
+                                    <textarea name="comment" rows="4" placeholder="Message"></textarea>
+                                </div>
+                                <div class="col-md-3">
+                                    <button class="btn btn--primary" type="submit">Submit Comment</button>
+                                </div>
+                            </form>
+                        </div>
+                    @endif
                 </div>
             </div>
             <!--end of row-->

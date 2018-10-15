@@ -13,6 +13,17 @@
 
 
 Route::get('/', 'FrontendManagerController@index');
+
+// View Post
 Route::get('/post/{id}/{title?}', 'FrontendManagerController@single');
+
+// Add Comment
+Route::post('/addComment/{post_id}', 'FrontendManagerController@addComment')->name('comments.add');
+
+// Add Like
+Route::get('/addLike/{post_id}', 'FrontendManagerController@addLike')->name('likes.add');
+
+// Remove Likes
+Route::get('/removeLike/{post_id}', 'FrontendManagerController@removeLike')->name('likes.remove');
 
 Auth::routes();

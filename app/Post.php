@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
+    protected $withCount = ['likes'];
 
     protected $fillable = [
         'title',
@@ -17,7 +18,7 @@ class Post extends Model
         'user_id',
     ];
 
-
+    // Relations
     public function category()
     {
         return $this->belongsTo('App\Category', 'category_id');
@@ -35,7 +36,17 @@ class Post extends Model
         // return $this->belongsToMany(TheOtherModel, piviot_table, ThisModelForgenKey, TheOtherModelForgenKey);
     }
 
+    public function comments()
+    {
+        return $this->hasMany('App\Comment', 'post_id');
+    }
 
+    public function likes()
+    {
+        return $this->hasMany('App\Like', 'post_id');
+    }
+
+    // Helpers
     public function getTagsIds()
     {
         return $this->tags->pluck('id')->toArray();
