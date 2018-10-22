@@ -26,18 +26,25 @@
         <ul class="sidebar-menu" data-widget="tree">
             <li><a href="{{ aurl('/') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
 
-            <li class="treeview">
-                <a href="#">
-                    <i class="fa fa-users"></i> <span>Users</span>
-                    <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href="{{ aurl('/users/create') }}"><i class="fa fa-plus"></i>Create Users</a></li>
-                    <li><a href="{{ aurl('/users') }}"><i class="fa fa-list"></i>Show All Users</a></li>
-                </ul>
-            </li>
+            @if (userCan('Add Users') || userCan('Show Users') || userCan('Edit Users') || userCan('Delete Users'))
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-users"></i> <span>Users</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        @if (userCan('Add Users'))
+                            <li><a href="{{ aurl('/users/create') }}"><i class="fa fa-plus"></i>Create Users</a></li>
+                        @endif
+                        @if (userCan('Show Users'))
+                            <li><a href="{{ aurl('/users') }}"><i class="fa fa-list"></i>Show All Users</a></li>
+                        @endif
+                    </ul>
+                </li>
+            @endif
+
             <li class="treeview">
                 <a href="#">
                     <i class="fa fa-book"></i> <span>Categories</span>
@@ -73,6 +80,19 @@
                 <ul class="treeview-menu">
                     <li><a href="{{ aurl('/posts/create') }}"><i class="fa fa-plus"></i>Create Posts</a></li>
                     <li><a href="{{ aurl('/posts') }}"><i class="fa fa-list"></i>Show All Posts</a></li>
+                </ul>
+            </li>
+
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-book"></i> <span>Permissions</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="{{ aurl('/permissions/create') }}"><i class="fa fa-plus"></i>Create Permissions</a></li>
+                    <li><a href="{{ aurl('/permissions') }}"><i class="fa fa-list"></i>Show All Permissions</a></li>
                 </ul>
             </li>
         </ul>

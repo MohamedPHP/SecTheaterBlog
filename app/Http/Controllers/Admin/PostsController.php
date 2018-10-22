@@ -5,13 +5,14 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 
 use App\Http\Controllers\Controller;
-
+use App\Authorizable;
 use App\Category;
 use App\Tag;
 use App\Post;
 
 class PostsController extends Controller
 {
+    use Authorizable;
 
     private $rules = [
         'title' => 'required|max:255',
@@ -35,7 +36,7 @@ class PostsController extends Controller
      */
     public function index()
     {
-        $posts = Post::with('category', 'tags', 'user');
+        $posts = Post::with('category', 'tags', 'user')->withCount('comments', 'likes');
         if (request()->has('search') && checkValue(request()->search)) {
             $posts->where('title', 'LIKE', '%'.request()->search.'%')->orWhere('keywords', 'LIKE', '%'.request()->search.'%');
         }
@@ -48,9 +49,9 @@ class PostsController extends Controller
             });
         }
 
-        $allPosts = $posts->paginate(5);
+        $allPosts = $posts->paginate(10);
         $postsCount = $posts->count();
-
+        
         return view('backend.posts.index', [
             'title' => "Show All Posts",
             'index' => $allPosts,
@@ -105,7 +106,7 @@ class PostsController extends Controller
      */
     public function show($id)
     {
-        $post = Post::where('id', $id)->with('category', 'tags', 'user')->first();
+        $post = Post::where('id', $id)->with('category', 'tags', 'user', 'comments')->first();
         if ($post) {
             return view('backend.posts.show', [
                 'title' => "Show Post " . ' : ' . $post->title,
@@ -122,7 +123,7 @@ class PostsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
+    {// code...
         $post = Post::where('id', $id)->with('category', 'tags', 'user')->first();
         $cats = Category::all();
         $tags = Tag::all();

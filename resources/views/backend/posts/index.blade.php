@@ -48,6 +48,8 @@
                       <th>Tags</th>
                       <th>User</th>
                       <th>Creation Date</th>
+                      <th>Comments</th>
+                      <th>Likes</th>
                       <th>Show</th>
                       <th>Edit</th>
                       <th>Delete</th>
@@ -62,6 +64,8 @@
                               <td>{{ $i->showTags() }}</td>
                               <td>{{ $i->user->name }}</td>
                               <td>{{ $i->created_at }}</td>
+                              <td>{{ $i->comments_count }}</td>
+                              <td>{{ $i->likes_count }}</td>
                               <td>
                                   <a href="{{ route('posts.show', [$i->id]) }}" class="btn btn-info"><i class="fa fa-eye"></i></a>
                               </td>

@@ -12,32 +12,28 @@
                 <table class="table">
                   <thead>
                     <tr>
-                      <th>Title</th>
+                      <th>Name</th>
                       <th>Show</th>
                       <th>Edit</th>
                       <th>Delete</th>
-                      <th>Posts</th>
                     </tr>
                   </thead>
                   <tbody>
                       @foreach ($index as $i)
                           <tr>
-                              <td>{{ $i->title }}</td>
+                              <td>{{ $i->name }}</td>
                               <td>
-                                  <a href="{{ route('cats.destroy', [$i->id]) }}" class="btn btn-info"><i class="fa fa-eye"></i></a>
+                                  <a href="{{ route('permissions.destroy', [$i->id]) }}" class="btn btn-info"><i class="fa fa-eye"></i></a>
                               </td>
                               <td>
-                                  <a href="{{ route('cats.edit', [$i->id]) }}" class="btn btn-success"><i class="fa fa-edit"></i></a>
+                                  <a href="{{ route('permissions.edit', [$i->id]) }}" class="btn btn-success"><i class="fa fa-edit"></i></a>
                               </td>
                               <td>
-                                  <form action="{{ route('cats.destroy', [$i->id]) }}" method="post">
+                                  <form action="{{ route('permissions.destroy', [$i->id]) }}" method="post">
                                       @csrf
                                       @method('DELETE')
                                       <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i></button>
                                   </form>
-                              </td>
-                              <td>
-                                  <a href="{{ route('posts.index') }}?cat={{ $i->id }}" class="btn btn-info"><i class="fa fa-list"></i></a>
                               </td>
                           </tr>
                       @endforeach

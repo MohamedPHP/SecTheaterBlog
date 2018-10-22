@@ -22,4 +22,8 @@ Route::group(['middleware' => ['admin']], function () {
     Route::resource('/cats', 'CatsController');
     Route::resource('/tags', 'TagsController');
     Route::resource('/posts', 'PostsController');
+    Route::resource('/permissions', 'PermissionsController');
+
+    Route::get('/delete-comment/{id}', 'DashboardController@deleteComment')->name('comment.delete');
+
 });

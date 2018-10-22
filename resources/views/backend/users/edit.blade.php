@@ -92,6 +92,24 @@
                                 @endif
                             </div>
                         </div>
+
+                        <div class='form-group'>
+                            <label class="col-md-2 control-label">Permissions</label>
+                            <div class="col-md-10">
+                                @foreach ($permissions->chunk(4) as $permissionCh)
+                                    <div class="row">
+                                        @foreach ($permissionCh as $permission)
+                                            <div class="col-md-3">
+                                                <span style="margin-right: 3px">
+                                                    <input type="checkbox" name="permissions[]" value="{{ $permission->name }}" {{ userCan($permission->name, $edit->id) ? 'checked' : '' }}>
+                                                    <label>{{ $permission->name }}</label>
+                                                </span>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
                     </div>
                     <div class="form-actions">
                         <div class="row">

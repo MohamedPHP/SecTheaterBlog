@@ -83,6 +83,43 @@
                         <img style="width: 200px; height: 150px;" src="{{ asset('uploads/' . $show->image) }}" alt="">
                         <br><hr>
                     </div>
+
+                    <div class="col-md-12">
+                        <h3>Comments</h3>
+                        <hr>
+                        @if ($show->comments->count())
+                            <table class="table">
+                              <thead>
+                                <tr>
+                                  <th>Comment</th>
+                                  <th>User</th>
+                                  <th>Delete</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                  @foreach ($show->comments as $c)
+                                      <tr>
+                                          <td>{{ $c->comment }}</td>
+                                          <td>
+                                              <a href="{{ route('users.show', [$c->user->id]) }}">
+                                                  {{ $c->user->name }}
+                                              </a>
+                                          </td>
+                                          <td>
+                                              <a class="btn btn-sm btn-danger" href="{{ route('comment.delete', [$c->id]) }}">
+                                                  <i class="fa fa-trash"></i>
+                                              </a>
+                                          </td>
+                                      </tr>
+                                  @endforeach
+                              </tbody>
+                            </table>
+                        @else
+                            <div class="alert alert-info">
+                                There Is No Comments
+                            </div>
+                        @endif
+                    </div>
                 </div>
             </div>
             <!-- /.box-body -->

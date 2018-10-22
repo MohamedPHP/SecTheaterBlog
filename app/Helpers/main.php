@@ -1,5 +1,6 @@
 <?php
 
+use App\User;
 
 function aurl($url)
 {
@@ -51,4 +52,19 @@ function UpdateImages($oldFile, $dir, $image) {
 function checkValue($value)
 {
     return !empty($value) && !is_null($value);
+}
+
+function userCan($permission, $id = null) {
+
+    if (!is_null($id)) {
+        $user = User::find($id);
+    } else {
+        $user = auth()->user();
+    }
+
+    if (checkValue($user->permissions)) {
+        return in_array($permission, json_decode(auth()->user()->permissions));
+    }
+    
+    return false;
 }

@@ -5,9 +5,13 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
+use App\Authorizable;
+use App\Permission;
 use Hash;
 class UsersController extends Controller
 {
+
+    use Authorizable;
 
     private $rules = [
         'name'     => 'required',
@@ -39,6 +43,7 @@ class UsersController extends Controller
     {
         return view('backend.users.create', [
             'title' => "Create Users",
+            'permissions' => Permission::all()
         ]);
     }
 
@@ -55,6 +60,8 @@ class UsersController extends Controller
         $data['image'] = UploadImages('users', $request->file('image'));
 
         $data['password'] = Hash::make($data['password']);
+
+        $data['permissions'] = json_encode($request->permissions);
 
         $user = User::create($data);
 
@@ -89,6 +96,7 @@ class UsersController extends Controller
         return view('backend.users.edit', [
             'title' => "Edit User" . ' : ' . $user->name,
             'edit'  => $user,
+            'permissions' => Permission::all()
         ]);
     }
 
@@ -111,6 +119,8 @@ class UsersController extends Controller
         $user->name = $request->name;
 
         $user->email = $request->email;
+
+        $user->permissions = json_encode($request->permissions);
 
         if ($request->has('password') && !empty($request->password) && !is_null($request->password)) {
             $user->password = Hash::make($request->password);

@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use App\Authorizable;
 use App\Category;
 
 class CatsController extends Controller
 {
+    use Authorizable;
+
     private $rules = [
         'title'     => 'required',
         'image'     => 'required|image',

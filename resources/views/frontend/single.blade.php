@@ -98,28 +98,41 @@
             <div class="row justify-content-center">
                 <div class="col-md-10 col-lg-8">
                     <div class="comments">
-                        <h3>{{ $post->comments->count() }} Comments</h3>
-                        <ul class="comments__list">
-                            @foreach ($post->comments as $comment)
-                                <li>
-                                    <div class="comment">
-                                        <div class="comment__avatar">
-                                            <img alt="Image" src="{{ asset('uploads/'.$comment->user->image) }}" />
-                                        </div>
-                                        <div class="comment__body">
-                                            <h5 class="type--fine-print">{{ $comment->user->name }}</h5>
-                                            <div class="comment__meta">
-                                                <span>{{ $comment->created_at->format('d M Y, h:i') }}</span>
+                        @if ($post->comments->count())
+                            <h3>{{ $post->comments->count() }} Comments</h3>
+                            <ul class="comments__list">
+                                @foreach ($post->comments as $comment)
+                                    <li>
+                                        <div class="comment">
+                                            <div class="comment__avatar">
+                                                <img alt="Image" src="{{ asset('uploads/'.$comment->user->image) }}" />
                                             </div>
-                                            <p>
-                                                {{ $comment->comment }}
-                                            </p>
+                                            <div class="comment__body">
+                                                <h5 class="type--fine-print">{{ $comment->user->name }}</h5>
+                                                <div class="comment__meta">
+                                                    <span>{{ $comment->created_at->format('d M Y, h:i') }}</span>
+                                                </div>
+                                                <p>
+                                                    {{ $comment->comment }}
+                                                </p>
+                                                @if (auth()->check() && auth()->user()->id == $comment->user_id)
+                                                    <p>
+                                                        <a href="{{ route('comment.remove', [$comment->id]) }}">Delete Comment</a>
+                                                    </p>
+                                                @endif
+                                            </div>
                                         </div>
-                                    </div>
-                                    <!--end comment-->
-                                </li>
-                            @endforeach
-                        </ul>
+                                        <!--end comment-->
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @else
+                            <div class="alert bg--danger">
+                                <div class="alert__body">
+                                    There Is No Comments
+                                </div>
+                            </div>
+                        @endif
                     </div>
                     <!--end comments-->
                     @if (auth()->check())

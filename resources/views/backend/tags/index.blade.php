@@ -16,6 +16,7 @@
                       <th>Show</th>
                       <th>Edit</th>
                       <th>Delete</th>
+                      <th>Posts</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -34,6 +35,9 @@
                                       @method('DELETE')
                                       <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i></button>
                                   </form>
+                              </td>
+                              <td>
+                                  <a href="{{ route('posts.index') }}?tag={{ $i->id }}" class="btn btn-info"><i class="fa fa-list"></i></a>
                               </td>
                           </tr>
                       @endforeach

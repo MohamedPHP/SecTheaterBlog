@@ -81,6 +81,23 @@ class FrontendManagerController extends Controller
         ]);
     }
 
+    public function removeComment($comment_id)
+    {
+        // First Way
+        // $c = Comment::find($comment_id);//->delete();
+
+        // Second Way **Best Practice
+        $c = auth()->user()->comments()->find($comment_id);//->delete();
+
+        if ($c) {
+            $c->delete();
+        }
+
+        return redirect()->back()->with([
+            'message' => 'Comment Deleted Successfully'
+        ]);
+    }
+
     public function addLike($post_id)
     {
         // dd($post_id);
